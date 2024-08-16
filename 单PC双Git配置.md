@@ -77,7 +77,7 @@
 
    当然这也可以在vscode添加字段**`[user]`**
 
-   ![image-20240815140955319](C:\Users\Ouser\Desktop\Typora\typora_photo\单PC双Git配置\image-20240815140955319.png)
+   ![image-20240815140955319](.\typora_photo\单PC双Git配置\image-20240815140955319.png)
 
 7. **git clone 下载**
 
