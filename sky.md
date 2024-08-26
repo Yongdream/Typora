@@ -385,6 +385,12 @@ CIDR 表示法是一种用于表示IP地址和它们的子网掩码的方法。C
 
 CIDR 地址表示方法通过结合基础 IP 地址和前缀长度，提供了一种有效的方法来描述 IP 地址块的大小和位置。它在现代网络中广泛应用，为路由和 IP 地址管理提供了极大的灵活性和效率。冲突处理scan
 
+## 部署Python工程
+
+[在服务器上安装python3.8.2环境](https://blog.csdn.net/qq_45163122/article/details/105725033)
+
+[远程服务器安装Anaconda并创建conda环境（超详细）](https://blog.csdn.net/weixin_60701343/article/details/140529674)
+
 ---
 
 
