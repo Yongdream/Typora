@@ -18,7 +18,7 @@
 
 **分支管理流程图示大致如下**：
 
-![分支管理流程](C:\Users\10147\Desktop\Typora\typora_photo\TortoiseGit创建分支merge全过程\f9d68e1a38bc0b3abfb459513bba875e.png)
+![分支管理流程](.\typora_photo\TortoiseGit创建分支merge全过程\f9d68e1a38bc0b3abfb459513bba875e.png)
 
 ### 分支功能和检出合并关系
 
@@ -128,7 +128,7 @@
 
 ### 提交内容
 
-![image-20240818022020457](C:\Users\10147\Desktop\Typora\typora_photo\TortoiseGit创建分支merge全过程\image-20240818022020457.png)
+![image-20240818022020457](.\typora_photo\TortoiseGit创建分支merge全过程\image-20240818022020457.png)
 
 ### 推送内容
 
