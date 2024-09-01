@@ -2403,7 +2403,7 @@ Redis版本更新，又增加了几种数据类型：
 
 ## 数据结构|类型内部实现
 
-<img src="D:\Yang7hi\note\typora_photo\InterviewBook\9fa26a74965efbf0f56b707a03bb9b7f.png" alt="img" style="zoom:50%;" />
+<img src=".\typora_photo\InterviewBook\9fa26a74965efbf0f56b707a03bb9b7f.png" alt="img" style="zoom:50%;" />
 
 ### String 
 
@@ -2462,13 +2462,13 @@ Zset 类型的底层数据结构是由**~~压缩列表~~或跳表**->**==listpac
 - 如果保存的元素数量增加了，或是元素变⼤了，会导致**内存重新分配**，会有**==连锁更新==**的问题，**直接影响到压缩列表的访问性能**。  
 - **压缩列表只会用于保存的节点数量不多的场景**
 
-![img](D:\Yang7hi\note\typora_photo\InterviewBook\1720432496274-b95e1802-1ecd-4210-a987-733265534c64.png)
+![img](.\typora_photo\InterviewBook\1720432496274-b95e1802-1ecd-4210-a987-733265534c64.png)
 
 ### 跳表
 
 跳表是⼀种在链表基础上改进过来的，实现了⼀种==「多层」的有序链表==，当数据量很⼤时，跳表的查找复杂度就是O(logN)。用于实现有序集合（Sorted Set）。
 
-![img](D:\Yang7hi\note\typora_photo\InterviewBook\1719804939236-89f12a47-b851-4d06-a5f3-399e1119db57.png)
+![img](.\typora_photo\InterviewBook\1719804939236-89f12a47-b851-4d06-a5f3-399e1119db57.png)
 
 ### 为什么只用跳表而不是红黑树
 
@@ -2488,7 +2488,7 @@ Zset 类型的底层数据结构是由**~~压缩列表~~或跳表**->**==listpac
 
 quicklist 解决办法：通过控制每个链表节点中的压缩列表的大小或者元素个数，来规避连锁更新的问题。因为压缩列表元素越少或越小，连锁更新带来的影响就越小，从而提供了更好的访问性能  
 
-![img](D:\Yang7hi\note\typora_photo\InterviewBook\1719035634188-584809ba-ea0b-48ff-a547-9ee4d1b4d365.png)
+![img](.\typora_photo\InterviewBook\1719035634188-584809ba-ea0b-48ff-a547-9ee4d1b4d365.png)
 
 ## 线程模型|Redis 采用单线程那么快
 
@@ -2530,7 +2530,7 @@ AOF 日志**减低了大量数据丢失的风险**，但是因为记录的是操
 
 - **主从数据不会时时刻刻保持一致**：主服务器并不会等到从服务器实际执行完命令后，再把结果返回，而是本地执行完命令后，就会向客户端返回。这导致无法实现强一致性保证，==**数据不一致**==是难以避免的。
 
-<img src="D:\Yang7hi\note\typora_photo\InterviewBook\2b7231b6aabb9a9a2e2390ab3a280b2d.png" alt="img" style="zoom:33%;" />
+<img src=".\typora_photo\InterviewBook\2b7231b6aabb9a9a2e2390ab3a280b2d.png" alt="img" style="zoom:50%;" />
 
 ### 哨兵模式
 
@@ -2569,7 +2569,7 @@ AOF 日志**减低了大量数据丢失的风险**，但是因为记录的是操
 
    Sentinel集群中超过quorum数量的Sentinel节点认为该redis节点主观下线，则该redis**==故障节点客观下线==。**
 
-   <img src="D:\Yang7hi\note\typora_photo\InterviewBook\1720159526929-d21d0b01-4ed9-4af7-8278-9d7fbdc4db3b.png" alt="img" style="zoom:50%;" />
+   <img src=".\typora_photo\InterviewBook\1720159526929-d21d0b01-4ed9-4af7-8278-9d7fbdc4db3b.png" alt="img" style="zoom:50%;" />
 
 2. 选取新主节点Leader
 
@@ -2591,7 +2591,7 @@ AOF 日志**减低了大量数据丢失的风险**，但是因为记录的是操
 
 **==大量缓存数据在同一时间过期（失效）==**时，如果此时有==**大量的用户请求，都无法在 Redis 中处理**==，于是全部请求都==**直接访问数据库**==，从而导致数据库的压力骤增，严重的会造成数据库宕机，从而形成一系列连锁反应，造成整个系统崩溃，这就是**缓存雪崩**
 
-<img src="D:\Yang7hi\note\typora_photo\InterviewBook\e2b8d2eb5536aa71664772457792ec40.png" alt="img" style="zoom:50%;" />
+<img src=".\typora_photo\InterviewBook\e2b8d2eb5536aa71664772457792ec40.png" alt="img" style="zoom:50%;" />
 
 ### 解决方案
 
@@ -2676,7 +2676,7 @@ Cache Aside（旁路缓存）策略是最常用的，应用程序直接与「数
 
 ==**写数据**==，我会选择更新 db 后，再删除缓存。
 
-<img src="D:\Yang7hi\note\typora_photo\InterviewBook\1720197145123-7e06f9a4-fcc7-42cc-a3d2-c44af4a73214.webp" alt="img" style="zoom: 67%;" />
+<img src=".\typora_photo\InterviewBook\1720197145123-7e06f9a4-fcc7-42cc-a3d2-c44af4a73214.webp" alt="img" style="zoom: 67%;" />
 
 如果需要数据库和缓存数据保持**强一致**，就不适合使用缓存。所以使用缓存提升性能，就是会有数据更新的延迟
 
