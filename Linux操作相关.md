@@ -152,6 +152,25 @@ echo > /dev/tcp/example.com/80 && echo "Port is open"
 
 如果远程服务器端⼝是开着的，则会打印“Port is open“，如果没有打开会提示”Connection refused“
 
+### 6.netstat
+
+```bash
+$ netstat -tunlp
+```
+
+- `-t`：这个选项告诉 `netstat` 只显示 TCP 相关的信息。TCP（传输控制协议）是一种面向连接的、可靠的、基于字节流的传输层通信协议。
+- `-u`：这个选项告诉 `netstat` 只显示 UDP 相关的信息。UDP（用户数据报协议）是一种无连接的、不可靠的、基于数据报的传输层通信协议。
+- `-n`：这个选项告诉 `netstat` 以数字形式显示地址和端口号，不进行域名解析。这通常用于调试或当域名解析服务（如 DNS）不可用或响应缓慢时。
+- `-l`：这个选项告诉 `netstat` 只列出处于监听状态（LISTEN）的套接字。监听状态意味着服务正在等待进入的连接。
+- `-p`：这个选项告诉 `netstat` 显示每个套接字所属的进程 ID（PID）和进程名称。这有助于确定哪个程序或服务正在使用特定的端口。
+
+```bash
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:5173            0.0.0.0:*               LISTEN      42973/node
+```
+
+
+
 ## linux命令|查看CPU利用率
 
 `vmstat` 提供了系统的整体性能监控信息，包括 CPU 利用率
@@ -256,7 +275,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 
 ## 程序在后台运行
 
-1. **加 `&` 符号**
+### 1. **加 `&` 符号**
 
    在命令的末尾加上 `&`，可以将该命令放到后台执行
 
@@ -272,7 +291,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
    killall [程序名] 
    ```
 
-2. **使用 `nohup`**
+### 2. **使用 `nohup`**
 
    如果要在终端**会话终止后保持任务继续处于活动状态**，`nohup` 就是首选工具。`nohup` 是「no hang up」的缩写，它可以确保命令的不间断执行。
 
@@ -296,7 +315,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 
    [🔗Linux nohup后台启动/ 后台启动命令中nohup 、&、重定向的使用](https://blog.csdn.net/weixin_49114503/article/details/134266408)
 
-3. **使用 screen 在后台运行 Linux 命令和管理会话**
+### 3. **使用 screen 在后台运行 Linux 命令和管理会话**
 
    `screen` 是一个强大的 Linux 实用程序，专为高级会话管理而设计。
 
@@ -311,7 +330,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
    screen -r session_name
    ```
 
-4. **使用 `Ctrl+Z` 暂停进程，并用 `bg` 将其放到后台**
+### 4. **使用 `Ctrl+Z` 暂停进程，并用 `bg` 将其放到后台**
 
    - 按 **`Ctrl+Z`** 暂停进程
 
