@@ -1,5 +1,9 @@
 # Redis
 
+[TOC]
+
+<img src="C:\Users\10147\Desktop\Typora\typora_photo\Redis\image-20240911011821844.png" alt="image-20240911011821844" style="zoom:150%;" />
+
 ## 什么是Redis, 具有哪些特点
 
 Redis是一个基于内存的数据库，读写速度非常快，通常被用作缓存、消息队列、分布式锁和键值存储数据库。
