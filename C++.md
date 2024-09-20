@@ -483,7 +483,7 @@ public:
 
 ### 5. 使用智能指针管理对象生命周期
 
-使用智能指针（如`std::unique_ptr`和`std::shared_ptr`）可以更安全地管理对象生命周期，避免内存泄漏。
+**使用智能指针**（如`std::unique_ptr`和`std::shared_ptr`）可以更安全地管理对象生命周期，避免内存泄漏。
 
 ```cpp
 int main() {
