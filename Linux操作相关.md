@@ -2,8 +2,6 @@
 
 [TOC]
 
-
-
 ## Linux中，vim里替换一段字符串怎么做
 
 在 Vim 中替换一段字符串可以使用 `:s` 命令。以下是具体步骤：
@@ -306,7 +304,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
    `nohup` 会忽略所有 SIGHUP 信号，程序的标准输出和标准错误通常会被重定向到 `nohup.out` 文件中
 
    ```bash
-       nohup example.sh > myoutput.log 2>&1 &
+   nohup example.sh > myoutput.log 2>&1 &
    ```
 
    ```bash

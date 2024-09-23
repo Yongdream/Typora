@@ -756,6 +756,38 @@ public:
   - 复制对象及其所有变量的值
   - 对象内部动态分配的资源不会发生变化，新老对象共享相同资源
 
+## C++面向对象|子类已经重写 如何调用父类的函数
+
+使用作用域解析运算符 `::`
+
+```cpp
+class Parent {
+public:
+    virtual void display() {
+        std::cout << "Parent display function." << std::endl;
+    }
+};
+
+class Child : public Parent {
+public:
+    void display() override {
+        std::cout << "Child display function." << std::endl;
+
+        // 调用父类的 display 函数
+        Parent::display();
+    }
+};
+
+int main() {
+    Child child;
+    child.display();
+    return 0;
+}
+
+```
+
+
+
 ## C++内存管理|内存分区
 
 **运行时确定**
