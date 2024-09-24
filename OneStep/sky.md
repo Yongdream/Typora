@@ -10,7 +10,7 @@
 
 ## 加密软件导致 `node_modules` 读取乱码
 
-![image-20240807155208266](D:\Yang7hi\note\typora_photo\3dScan\image-20240807155208266.png)
+![image-20240807155208266](.\typora_photo\3dScan\image-20240807155208266.png)
 
 - 为什么使用 Python 脚本无法正常查看
   
