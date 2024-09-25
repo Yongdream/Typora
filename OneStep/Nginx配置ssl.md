@@ -122,31 +122,46 @@ sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
 
-- [ ] #### 生成或获取SSL证书
+- [ ] #### 获取SSL证书
 
-**`pengding...`**
+证书和私钥文件分别是 `activate.3devok.cn.key` 和 `activate.3devok.cn.pem`，并且将它们置于 /etc/nginx/key/ssl/ 目录下
+
+需要确保 Nginx 用户（通常是 `www-data`）对证书和密钥文件有读取权限：
+
+```bash
+sudo chown www-data:www-data /etc/nginx/key/ssl/activate.3devok.cn.pem
+sudo chown www-data:www-data /etc/nginx/key/ssl/activate.3devok.cn.key
+
+sudo chmod 640 /etc/nginx/key/ssl/activate.3devok.cn.pem
+sudo chmod 640 /etc/nginx/key/ssl/activate.3devok.cn.key	
+```
 
 - [ ] #### 配置 Nginx 来服务静态文件
 
-1. **编辑 Nginx 配置文件**
+##### 1.编辑 Nginx 配置文件
 
-   创建或编辑一个Nginx配置文件以配置Nginx服务你的前端项目。假设你使用的是默认的Nginx配置文件：
+   创建或编辑一个Nginx配置文件以配置Nginx服务前端项目
 
    ```bash
    sudo nano /etc/nginx/sites-available/licensing-frontend
    ```
 
-2. **添加或修改配置来服务静态文件**
+##### 2.添加或修改配置来服务静态文件
 
    确保`root`指令指向构建目录**`/softauth/licensing-frontend`**
 
    ```nginx
    server {
-       listen 80;
-       server_name 116.62.113.100;  # 服务器IP或域名
+       listen 443 ssl;  # 启用 SSL
+       server_name activate.3devok.cn;
    
-       root /softauth/licensing-frontend;  # 指向构建后的文件目录
-       index index.html;
+       # 证书文件路径（PEM 格式）
+       ssl_certificate /etc/nginx/key/ssl/activate.3devok.cn.pem;
+       # 私钥文件路径（key 格式）
+       ssl_certificate_key /etc/nginx/key/ssl/activate.3devok.cn.key;
+   
+       ssl_protocols TLSv1.2 TLSv1.3;  # 允许的协议
+       ssl_ciphers 'HIGH:!aNULL:!MD5';
    
        location / {
            try_files $uri $uri/ /index.html;  # 确保路由能正确工作
@@ -158,7 +173,7 @@ sudo systemctl enable nginx
    }
    ```
 
-3. **启用配置并重启Nginx**
+##### 3.启用配置并重启Nginx
 
    将这个配置文件链接到`sites-enabled`目录中：
 
@@ -178,7 +193,7 @@ sudo systemctl enable nginx
    sudo systemctl reload nginx
    ```
 
-4. 设置防火墙 (可选)
+##### 4.设置防火墙(可选)
 
    如果使用的是`ufw`防火墙，可以允许`Nginx`的HTTPS流量：
 
@@ -188,6 +203,30 @@ sudo systemctl enable nginx
    ```
 
    这样，HTTPS的443端口会被放行，HTTP的80端口会被删除。
+
+##### 5.验证SSL配置正常
+
+  - 打开浏览器，访问 `https://activate.3devok.cn`
+  - 查看地址栏的锁图标，F12查看证书安全详情
+
+   <img src="./typora_photo/Nginx配置ssl/image-20240925101132614.png" alt="image-20240925101132614" style="zoom:50%;" />
+
+   - 使用 `openssl`
+
+     ```bash
+     openssl s_client -connect activate.3devok.cn:443
+     ```
+
+出现验证成功代表没有问题
+
+   ![image-20240925100838419](./typora_photo/Nginx配置ssl/image-20240925100838419.png)
+
+6. **检查nginx使用和错误日志**
+
+   ```bash
+   $ tail -f /var/log/nginx/licensing-frontend.access.log
+   $ tail -f /var/log/nginx/licensing-frontend.error.log
+   ```
 
 ### Step 3：测试前端部署
 
@@ -231,6 +270,9 @@ sudo systemctl enable nginx
    ```bash
    $ jobs
    [1]+  Running                 nohup python app.py > output.log 2>&1 &
+   $ ps aux | grep app.py
+   root      565960  0.0  0.9 261232 35416 ?        S    Sep24   0:09 python app.py
+   root      666376  0.0  0.0   6612  2332 pts/0    R+   10:19   0:00 grep --color=auto app.py
    ```
 
 ## 项目运行演示
@@ -246,6 +288,59 @@ sudo systemctl enable nginx
 2. **RGP下载**
 
    ![image-20240904132748580](./typora_photo/Nginx配置ssl/image-20240904132748580.png)
+   
+
+## 最终nginx配置
+
+```nginx
+server {
+    listen 80;  # 监听HTTP请求
+    server_name 116.62.113.100;  # 你的服务器IP或域名
+
+    # 将HTTP请求重定向到HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;  # 启用 SSL
+    server_name activate.3devok.cn;
+
+    # 证书文件路径（PEM 格式）
+    ssl_certificate /etc/nginx/key/ssl/activate.3devok.cn.pem;
+    # 私钥文件路径（PEM 格式）
+    ssl_certificate_key /etc/nginx/key/ssl/activate.3devok.cn.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;  # 允许的协议
+    ssl_ciphers 'HIGH:!aNULL:!MD5';
+
+
+    root /softauth/licensing-frontend/dist;  # 指向构建后的文件目录
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;  # 确保单页应用路由能正确工作
+    }
+
+    # 允许访问 /scanTechRes/res 目录中的文件
+    location /scanTechRes/res/ {
+        alias /scanTechRes/res/;  # 指向实际的文件路径
+        autoindex on;  # 允许列出目录中的文件（可选）
+        client_max_body_size 1000M;  # 允许较大的文件下载
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:9680/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # 可选：访问日志和错误日志路径
+    access_log /var/log/nginx/licensing-frontend.access.log;
+    error_log /var/log/nginx/licensing-frontend.error.log;
+}
+```
 
 ---
 
