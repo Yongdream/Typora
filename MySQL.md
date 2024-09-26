@@ -257,13 +257,13 @@ MySQL 更适合处理有明确关系结构、需要高事务性和数据一致�
 
 3. **查询语言**
 
-   - **MongoDB**：使用**MongoDB 查询语言**（MQL），基于 JSON 风格的查询方式。
+   - **MongoDB**：使用 **MongoDB 查询语言**（MQL），基于 JSON 风格的查询方式。
      
      ```js
      // 查找 `age` 为 30 的用户
      db.users.find({ age: 30 })
      ```
-   - **MySQL**：使用**SQL**（结构化查询语言），基于表和行的查询方式。
+   - **MySQL**：使用 **SQL**（结构化查询语言），基于表和行的查询方式。
      
      ```sql
      SELECT * FROM users WHERE age = 30;
