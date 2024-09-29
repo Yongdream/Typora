@@ -229,7 +229,6 @@ void* calloc(size_t num, size_t size);
 
 3.const定义的常量是带类型的;define定义的常量不带类型。因此define定义的常量不利于类型检查,
 
-
 ## C++基础|编译过程
 
 预处理 「Preprocessing」，编译「Compilation」，汇编「Assemble」，链接「Linking」
@@ -1948,7 +1947,7 @@ public:
 
 ### 懒汉版
 
-==先不创建实例，在第一次被调用时，才创建实例。==直到调用`get_instance()`方法的时候才 new一个单例的对象
+==先不创建实例，在第一次被调用时，才创建实例==。直到调用`get_instance()`方法的时候才 new 一个单例的对象
 
 ```cpp
 class A{
@@ -2068,4 +2067,4 @@ int main() {
 
 ## 设计模式原则
 
-- 单一职责模式
+- **单一职责模式**
